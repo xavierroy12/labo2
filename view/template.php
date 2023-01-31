@@ -10,8 +10,11 @@ echo "</pre>----------------------------<br/>";
 <?php $baseURL = "/mvc/"?>
 <!DOCTYPE html>
 <html>
+    
     <head>
         <meta charset="utf-8" />
+        <meta name="referrer" content="no-referrer-when-downgrade" />
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
         <title><?= $title ?></title>
         <link href="<?= $baseURL;?>inc/css/style.css" rel="stylesheet" /> 
     </head>

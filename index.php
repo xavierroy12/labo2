@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 //Débogage afficher ce qui est reçu en paramètres
 //echo "----------------------------<br/>";
 //echo "Paramètres reçus:<br/><pre>";

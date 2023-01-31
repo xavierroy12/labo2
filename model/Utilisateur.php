@@ -2,18 +2,18 @@
 
 
 Class Utilisateur {
-    private $id_utilisateur;
-    private $nom;
-    private $prenom;
-    private $courriel;
-    private $mdp;
-    private $est_actif;
-    private $role_utilisateur;
-    private $type_utilisateur;
-    private $token;
+    private $_id_utilisateur;
+    private $_nom;
+    private $_prenom;
+    private $_courriel;
+    private $_mdp;
+    private $_est_actif;
+    private $_role_utilisateur;
+    private $_type_utilisateur;
+    private $_token;
 
     public function __construct($params = array()){
-  
+        
         foreach($params as $k => $v){
 
             $methodName = "set_" . $k;
@@ -23,184 +23,188 @@ Class Utilisateur {
         }
     }
 
-
     /**
-     * Get the value of id_utilisateur
+     * Get the value of _id_utilisateur
      */ 
-    public function getId_utilisateur()
+    public function get_id_utilisateur()
     {
-        return $this->id_utilisateur;
+        return $this->_id_utilisateur;
     }
 
     /**
-     * Set the value of id_utilisateur
+     * Set the value of _id_utilisateur
      *
      * @return  self
      */ 
-    public function setId_utilisateur($id_utilisateur)
+    public function set_id_utilisateur($_id_utilisateur)
     {
-        $this->id_utilisateur = $id_utilisateur;
+        $this->_id_utilisateur = $_id_utilisateur;
 
         return $this;
     }
 
     /**
-     * Get the value of nom
+     * Get the value of _nom
      */ 
-    public function getNom()
+    public function get_nom()
     {
-        return $this->nom;
+        return $this->_nom;
     }
 
     /**
-     * Set the value of nom
+     * Set the value of _nom
      *
      * @return  self
      */ 
-    public function setNom($nom)
+    public function set_nom($_nom)
     {
-        $this->nom = $nom;
+        $this->_nom = $_nom;
 
         return $this;
     }
 
     /**
-     * Get the value of prenom
+     * Get the value of _prenom
      */ 
-    public function getPrenom()
+    public function get_prenom()
     {
-        return $this->prenom;
+        return $this->_prenom;
     }
 
     /**
-     * Set the value of prenom
+     * Set the value of _prenom
      *
      * @return  self
      */ 
-    public function setPrenom($prenom)
+    public function set_prenom($_prenom)
     {
-        $this->prenom = $prenom;
+        $this->_prenom = $_prenom;
 
         return $this;
     }
 
     /**
-     * Get the value of courriel
+     * Get the value of _courriel
      */ 
-    public function getCourriel()
+    public function get_courriel()
     {
-        return $this->courriel;
+        return $this->_courriel;
     }
 
     /**
-     * Set the value of courriel
+     * Set the value of _courriel
      *
      * @return  self
      */ 
-    public function setCourriel($courriel)
+    public function set_courriel($_courriel)
     {
-        $this->courriel = $courriel;
+        $this->_courriel = $_courriel;
 
         return $this;
     }
 
     /**
-     * Get the value of mdp
+     * Get the value of _mdp
      */ 
-    public function getMdp()
+    public function get_mdp()
     {
-        return $this->mdp;
+        return $this->_mdp;
     }
 
     /**
-     * Set the value of mdp
+     * Set the value of _mdp
      *
      * @return  self
      */ 
-    public function setMdp($mdp)
+    public function set_mdp($_mdp)
     {
-        $this->mdp = $mdp;
+        $this->_mdp = $_mdp;
 
         return $this;
     }
 
     /**
-     * Get the value of est_actif
+     * Get the value of _est_actif
      */ 
-    public function getEst_actif()
+    public function get_est_actif()
     {
-        return $this->est_actif;
+        return $this->_est_actif;
     }
 
     /**
-     * Set the value of est_actif
+     * Set the value of _est_actif
      *
      * @return  self
      */ 
-    public function setEst_actif($est_actif)
+    public function set_est_actif($_est_actif)
     {
-        $this->est_actif = $est_actif;
+        $this->_est_actif = $_est_actif;
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * Get the value of _role_utilisateur
+     */ 
+    public function get_role_utilisateur()
+    {
+        return $this->_role_utilisateur;
+    }
+
+    /**
+     * Set the value of _role_utilisateur
+     *
+     * @return  self
+     */ 
+    public function set_role_utilisateur($_role_utilisateur)
+    {
+        $this->_role_utilisateur = $_role_utilisateur;
 
         return $this;
     }
 
     /**
-     * Get the value of role_utilisateur
+     * Get the value of _type_utilisateur
      */ 
-    public function getRole_utilisateur()
+    public function get_type_utilisateur()
     {
-        return $this->role_utilisateur;
+        return $this->_type_utilisateur;
     }
 
     /**
-     * Set the value of role_utilisateur
+     * Set the value of _type_utilisateur
      *
      * @return  self
      */ 
-    public function setRole_utilisateur($role_utilisateur)
+    public function set_type_utilisateur($_type_utilisateur)
     {
-        $this->role_utilisateur = $role_utilisateur;
+        $this->_type_utilisateur = $_type_utilisateur;
 
         return $this;
     }
 
     /**
-     * Get the value of type_utilisateur
+     * Get the value of _token
      */ 
-    public function getType_utilisateur()
+    public function get_token()
     {
-        return $this->type_utilisateur;
+        return $this->_token;
     }
 
     /**
-     * Set the value of type_utilisateur
+     * Set the value of _token
      *
      * @return  self
      */ 
-    public function setType_utilisateur($type_utilisateur)
+    public function set_token($_token)
     {
-        $this->type_utilisateur = $type_utilisateur;
+        $this->_token = $_token;
 
         return $this;
     }
-
-    /**
-     * Get the value of token
-     */ 
-    public function getToken()
-    {
-        return $this->token;
     }
 
-    /**
-     * Set the value of token
-     *
-     * @return  self
-     */ 
-    public function setToken($token)
-    {
-        $this->token = $token;
 
-        return $this;
-    }
-}

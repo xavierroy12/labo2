@@ -10,7 +10,6 @@ class Produit {
     private $_description;
 
     public function __construct($params = array()){
-  
         foreach($params as $k => $v){
 
             $methodName = "set_" . $k;
