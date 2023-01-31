@@ -15,9 +15,10 @@ function authentifier($courriel, $motPasse)
     $utilisateurManager = new UtilisateurManager();
     $utilisateur =  $utilisateurManager->verifAuthentification($courriel, $motPasse);
     if(isset($utilisateur)){
-        $_SESSION['courriel'] = $utilisateur->getCourriel();
-        $_SESSION['role'] = $utilisateur->getRole_utilisateur();
-        listproduit();
+        $_SESSION['courriel'] = $utilisateur->get_Courriel();
+        $_SESSION['role'] = $utilisateur->get_Role_utilisateur();
+        listProduits();
+       
     }
     else{
         echo 'Erreur de connection';
@@ -26,7 +27,12 @@ function authentifier($courriel, $motPasse)
 }
 function deconnexion()
 {
+    session_unset();
     session_destroy();
+   
+ 
+    echo 'Vous avez été déconnecter';
+    listProduits();
 }
 
 ?>
