@@ -4,9 +4,13 @@
 <?php $title = 'Accueil'; ?>
 
 <?php //Démarre la tamporisation du contenu ?>
-<?php ob_start(); ?>
-<h1>Démonstration du modèle MVC</h1>
+<?php ob_start(); 
+
+
+ ?>
+<h1>Démonwstration du modèle MVC</h1>
 <p>Liste des produits sur la page d'accueil</p>
+
 
 
 <?php

@@ -1,5 +1,6 @@
 <?php
 session_start();
+define('REMEMBER_ME_COOKIE_DURATION', (86400 * 30));
 
 //Débogage afficher ce qui est reçu en paramètres
 //echo "----------------------------<br/>";
@@ -55,12 +56,31 @@ if (isset($_REQUEST['action'])) {
     }
     elseif ($_REQUEST['action'] == 'connexion') {
         require('controller/controllerUtilisateur.php');
-        getFormConnexion();
+
+        
+        if (isset($_SESSION['courriel'])) {
+            header('refresh: 0; url = index.php');
+            exit;
+        }
+        
+        if (isset($_COOKIE['remember_me'])) {
+            $cookieValuesArray = json_decode($_COOKIE['remember_me'], true);
+
+            if (authentifier_autologin($cookieValuesArray['user_id'],$cookieValuesArray['courriel'], $cookieValuesArray['token'])) {
+                header('refresh: 0; url = index.php');
+                exit;
+            }
+        }
+        getFormConnexion(); 
     }
     elseif ($_REQUEST['action'] == 'authentifier') {
         if (isset($_REQUEST['courriel']) && isset($_REQUEST['mdp'])) {
         require('controller/controllerUtilisateur.php');
-        authentifier($_REQUEST['courriel'], $_REQUEST['mdp'] );
+        if(!isset($_REQUEST['souvenir'])){
+            $_REQUEST['souvenir'] = false;
+        }
+
+        authentifier($_REQUEST['courriel'], $_REQUEST['mdp'], $_REQUEST['souvenir'] );
         }
         else{
             echo 'Erreur : no email or no password';
@@ -70,12 +90,39 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerUtilisateur.php');
         deconnexion();
     }
+    elseif ($_REQUEST['action'] == 'register'){
+
+        require('controller/controllerUtilisateur.php');
+        registerView();
+    }
+    elseif($_REQUEST['action'] == 'inscription'){
+        require('controller/controllerUtilisateur.php');
+        if (isset($_REQUEST['prenom']) && isset($_REQUEST['nom']) && isset($_REQUEST['mdp']) && isset($_REQUEST['courriel'])) {
+            registerVerif($_REQUEST);
+        }
+    }
+    elseif($_REQUEST['action'] == 'validation'){
+        require('controller/controllerUtilisateur.php');
+        checkTokenInscription($_REQUEST['id'], $_REQUEST['token']);
+    }
+
 
 }
 // Si pas de paramètre charge l'accueil
+elseif(isset($_COOKIE['remember_me'])){
+    require('controller/controllerUtilisateur.php');
+    $cookieValuesArray = json_decode($_COOKIE['remember_me'], true);
+
+    if (authentifier_autologin($cookieValuesArray['user_id'],$cookieValuesArray['courriel'], $cookieValuesArray['token'])) {
+        listProduits();
+    }
+}
+
 else {
     //Ajoute le controleur de Produit
     require('controller/controllerAccueil.php');
+
+
     //Appel la fonction listProduits contenu dans le controleur de Produit
     listProduits();
 }

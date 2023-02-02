@@ -16,7 +16,7 @@
         <label for="mdp">Mot de passe: </label>
         <input type="password" name="mdp" id="mdp">
     </div>
-    <input type="checkbox" id="souvenir" name="souvenir" value="souvenir">
+    <input type="checkbox" id="souvenir" name="souvenir" value="true">
     <label for="souvenir"> Se souvenir de moi</label><br>
     <input type="hidden" name="action" value="authentifier">
     <div>

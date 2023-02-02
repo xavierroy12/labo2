@@ -1,10 +1,25 @@
 <?php
-//Débogage afficher ce qui est reçu en paramètres
-echo "----------------------------<br/>";
-echo "Paramètres reçus:<br/><pre>";
-print_r($_REQUEST);
-echo "</pre>----------------------------<br/>";
+    echo '----------------------------<br />
+          Paramètres reçus :<br />
+          $_REQUEST :<br />
+          <pre>';
+
+    print_r($_REQUEST);
+    
+    echo '</pre>
+          $_SESSION :<br />
+          <pre>';
+    print_r($_SESSION);
+    echo '</pre>
+          $_COOKIE :<br />
+          <pre>';
+
+    print_r($_COOKIE);
+
+
+    echo '</pre>----------------------------<br />';
 ?>
+
 
 
 <?php $baseURL = "/mvc/"?>
@@ -29,13 +44,14 @@ echo "</pre>----------------------------<br/>";
                 <li><a href="<?= $baseURL;?>index.php">Accueil</a></li>
                 <li><a href="<?= $baseURL;?>produits">Les produits</a></li>
                 <li><a href="<?= $baseURL;?>categories">Les categories</a></li>
-                 
+                <li><a href="<?= $baseURL;?>register">S'inscrire</a></li>
                 
                 <?php if(isset($_SESSION['courriel'])) : ?>
                     <li><a href="<?= $baseURL;?>deconnexion">Se deconnecter</a></li>
                 <?php else : ?>
                     <li><a href="<?= $baseURL;?>connexion">Se Connecter</a></li>
                 <?php endif; ?>
+
             </ul>
         </nav>
         <?= $content ?>

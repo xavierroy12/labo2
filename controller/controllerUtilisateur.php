@@ -10,13 +10,18 @@ function getFormConnexion()
 
     require('view/loginView.php');
 }
-function authentifier($courriel, $motPasse)
+function authentifier($courriel, $motPasse, $remember)
 {
     $utilisateurManager = new UtilisateurManager();
     $utilisateur =  $utilisateurManager->verifAuthentification($courriel, $motPasse);
-    if(isset($utilisateur)){
+    if(isset($utilisateur) && $utilisateur->get_est_actif() == 1){
         $_SESSION['courriel'] = $utilisateur->get_Courriel();
         $_SESSION['role'] = $utilisateur->get_Role_utilisateur();
+
+        if($remember == 'true'){
+
+            $utilisateurManager->addAutoLogin($utilisateur->get_id_utilisateur(), $utilisateur->get_courriel());
+        }
         listProduits();
        
     }
@@ -27,10 +32,15 @@ function authentifier($courriel, $motPasse)
 }
 function deconnexion()
 {
+    require_once("Util.php");
+    $utilisateurManager = new UtilisateurManager();
+    $utilisateurManager->autoLoginSetInactif();
     session_unset();
     session_destroy();
-   
- 
+    if (isset($_COOKIE['remember_me'])) {
+         $utili = new Util();
+         $utili->clearAuthCookie();
+    }
     echo 'Vous avez été déconnecter';
     listProduits();
 }
@@ -40,7 +50,7 @@ function  authentificationGoogle($credential){
     $payload = $client->verifyIdToken($credential);
     if ($payload) {
     $userid = $payload['sub'];
-    print_r($payload);
+    
     $utilisateurManager = new UtilisateurManager();
     $userLoggedGoogle = $utilisateurManager->getUtilisateurParCourriel($payload['email']);
     if(isset($userLoggedGoogle)){
@@ -58,7 +68,65 @@ function  authentificationGoogle($credential){
     listProduits();
     }
     else {
-    echo 'badPenis';
+    echo 'badConnect';
+    }
+}
+function authentifier_autologin($idUser,string $courriel, string $randomToken) : bool {
+
+    
+    $utilisateurManager = new UtilisateurManager();
+
+    /* La méthode verifier_autologin() doit être codée dans le gestionnaire
+       "UtilisateurManager" (à vous de la coder) et doit valider que le
+       "token" pour l'utilisateur donné existe dans la BD et est encore
+       valide (il n'a pas expiré). Si la validation fonctionne, c'est-à-dire
+       que le "token" existe en BD et est encore valide, on peut réactiver
+       la session PHP. */
+    if ($utilisateurManager->verifier_autologin($idUser, $randomToken)) {
+
+        $utilisateur = $utilisateurManager->getUtilisateurParCourriel($courriel);
+        
+        $_SESSION['courriel'] = $courriel;
+        $_SESSION['role'] = $utilisateur->get_role_utilisateur();
+        echo'logged in by cookie autologger, Set the session variable from the cookie';
+        return true;
+    }
+    
+    /* Si on se rend ici, c'est que le "token" du cookie "Remember me" n'existe
+       pas en BD pour l'utilisateur donné ou il a expiré. Ce faisant, on ne peut
+       pas réactiver la session PHP. */
+    return false;
+}
+function registerView(){
+    if(isset($_SESSION['courriel'])){
+    echo 'Vous etes deja connecter. Veuiller vous deconnecter avant de vous inscrire.';
+    listProduits();
+    }
+    else{
+       
+        require('view/inscriptionView.php');
+    }
+}
+function registerVerif($infoRegister){
+    $utilisateurManager = new UtilisateurManager();
+    if($utilisateurManager->alreadyRegistered($_REQUEST['courriel'])){
+        echo 'Un utilisateur est deja inscrit avec ce courriel ';
+        listProduits();
+    }
+    else{ 
+        $utilisateurManager->registerUser($infoRegister);
+        listProduits();
+    }
+}
+function checkTokenInscription($id, $token){
+    $utilisateurManager = new UtilisateurManager();
+    if($utilisateurManager->getUserByIdAndToken($id, $token)){
+        echo 'succes';
+        $utilisateurManager->setActif($id);
+        listProduits();
+    }
+    else{
+        echo "bad verification. we'll get em next time buddy";
     }
 }
 
