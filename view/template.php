@@ -13,6 +13,7 @@ echo "</pre>----------------------------<br/>";
     
     <head>
         <meta charset="utf-8" />
+        <meta name="google-signin-client_id" content=" 215318157623-4kbv6bvn6gp1ppdqq59a0v5sppeh9i4b.apps.googleusercontent.com">
         <meta name="referrer" content="no-referrer-when-downgrade" />
         <script src="https://accounts.google.com/gsi/client" async defer></script>
         <title><?= $title ?></title>

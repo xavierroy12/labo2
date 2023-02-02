@@ -49,6 +49,10 @@ if (isset($_REQUEST['action'])) {
             echo 'Erreur : aucun identifiant de produit envoyé';
         }
     }
+    elseif(isset($_REQUEST["credential"])){
+        require('controller/controllerUtilisateur.php');
+        authentificationGoogle($_REQUEST["credential"]);
+    }
     elseif ($_REQUEST['action'] == 'connexion') {
         require('controller/controllerUtilisateur.php');
         getFormConnexion();
@@ -66,6 +70,7 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerUtilisateur.php');
         deconnexion();
     }
+
 }
 // Si pas de paramètre charge l'accueil
 else {

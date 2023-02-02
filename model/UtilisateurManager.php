@@ -1,7 +1,5 @@
 <?php
 
-
-
 require_once("model/Manager.php");
 require_once("model/Utilisateur.php");
 
@@ -37,6 +35,11 @@ class UtilisateurManager extends Manager
             else
             return null;
         }
+    }
+    public function addUtilisateur($infoUtilisateur){
+        $db = $this->dbConnect();
+        $req = $db->prepare("INSERT INTO tbl_utilisateur ( nom, prenom, courriel,  est_actif, role_utilisateur, type_utilisateur) VALUES (:nom, :prenom, :courriel,1,0,1)");
+        $req->execute(array(":courriel" => $infoUtilisateur['courriel'], ":nom" => $infoUtilisateur['nom'], ":prenom" => $infoUtilisateur['prenom']));
     }
 
 

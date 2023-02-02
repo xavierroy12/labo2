@@ -1,5 +1,6 @@
 <?php $title = 'login'?>
 
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
 
 
 <?php ob_start(); ?>
