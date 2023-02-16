@@ -78,7 +78,38 @@ class UtilisateurManager extends Manager
            return false;
         }
     }
-    public function autoLoginSetInactif(){
+    public function autoLoginSetactif($idUser, $courriel){
+
+
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT * FROM tbl_autologin WHERE id_utilisateur = :idUser');
+        $req->execute(array(":idUser" => $idUser));
+        $userAutologin = $req->fetchall();
+
+
+       if($userAutologin){ // if user already as entry in autologin
+        //Create a new token to be stored in db instead of old one and generate cookie from that token
+        $date = date_create('now'); //Create date right now
+        date_add($date, date_interval_create_from_date_string("30 days")); // add 30 days to our date
+        $date = date_format($date,"Y-m-d");
+
+        $utilitaire = new Util(); //create Util to access get token
+        $token = $utilitaire->getToken(16); // get a non hashed token with a lenght of 16
+        $tokenHash = password_hash($token, PASSWORD_DEFAULT); // Get a hashed version of the token for the BD
+        $timeBeforeExpire = REMEMBER_ME_COOKIE_DURATION;
+        $utilitaire->setAuthCookie($idUser, $courriel, $token, $timeBeforeExpire);
+
+            $db = $this->dbConnect();
+            $req = $db->prepare('UPDATE tbl_autologin SET est_valide = 1, token_hash = :token WHERE id_utilisateur = :idUser');
+            $req->execute(array(":idUser" => $idUser, ":token" => $tokenHash));
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
+    public function autoLoginCheck(){
         if(isset($_COOKIE['remember_me'])){
         $cookieValuesArray = json_decode($_COOKIE['remember_me'], true);
         $idUser = $cookieValuesArray['user_id'];

@@ -47,6 +47,12 @@ class ProduitManager extends Manager
         return $produits;
 
     }
+    public function insertProduit($produit, $categorie, $description){
+        $db = $this->dbConnect();
+        $req = $db->prepare("INSERT INTO tbl_utilisateur ( nom, prenom, courriel,mdp,  est_actif, role_utilisateur, type_utilisateur,token) VALUES (:nom, :prenom,:courriel, :mdp ,0,0,0,:token)");
+        $req->execute(array(":courriel" => $infoRegister['courriel'], ":nom" => $infoRegister['nom'], ":prenom" => $infoRegister['prenom'], ':mdp' => $mdpHashed, ':token' => $tokenHash));
+        $idUser =  $db->lastInsertId();
+    }
 
 }
 ?>

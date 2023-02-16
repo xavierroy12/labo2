@@ -17,10 +17,17 @@ function authentifier($courriel, $motPasse, $remember)
     if(isset($utilisateur) && $utilisateur->get_est_actif() == 1){
         $_SESSION['courriel'] = $utilisateur->get_Courriel();
         $_SESSION['role'] = $utilisateur->get_Role_utilisateur();
-
+//ici
         if($remember == 'true'){
-
+            
+            if($utilisateurManager->autoLoginSetactif($utilisateur->get_id_utilisateur(),$courriel)){
+                echo 'autologin already exist, so not adding a new one';
+               
+            }
+            else{
             $utilisateurManager->addAutoLogin($utilisateur->get_id_utilisateur(), $utilisateur->get_courriel());
+            echo 'adding a new autologin in tbl autologin';
+            }
         }
         listProduits();
        
@@ -34,7 +41,7 @@ function deconnexion()
 {
     require_once("Util.php");
     $utilisateurManager = new UtilisateurManager();
-    $utilisateurManager->autoLoginSetInactif();
+    $utilisateurManager->autoLoginCheck();
     session_unset();
     session_destroy();
     if (isset($_COOKIE['remember_me'])) {
