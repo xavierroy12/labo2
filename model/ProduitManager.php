@@ -49,10 +49,17 @@ class ProduitManager extends Manager
     }
     public function insertProduit($produit, $categorie, $description){
         $db = $this->dbConnect();
-        $req = $db->prepare("INSERT INTO tbl_utilisateur ( nom, prenom, courriel,mdp,  est_actif, role_utilisateur, type_utilisateur,token) VALUES (:nom, :prenom,:courriel, :mdp ,0,0,0,:token)");
-        $req->execute(array(":courriel" => $infoRegister['courriel'], ":nom" => $infoRegister['nom'], ":prenom" => $infoRegister['prenom'], ':mdp' => $mdpHashed, ':token' => $tokenHash));
-        $idUser =  $db->lastInsertId();
+        $req = $db->prepare("INSERT INTO tbl_produit (tbl_produit.id_categorie, produit, tbl_produit.description) VALUES((SELECT tbl_categorie.id_categorie FROM tbl_categorie WHERE categorie = :categorie), :produit, :descr)");
+        $req->execute(array(":categorie" => $categorie, ":descr" => $description, ":produit" => $produit));
+        return $idProduit =  $db->lastInsertId();
     }
+    public function deleteProduit($id)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare("DELETE FROM tbl_produit WHERE id_produit = :id");
+        $req->execute(array(":id" => $id));
+    }
+    
 
 }
 ?>
