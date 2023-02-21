@@ -22,4 +22,17 @@ class CategorieManager extends Manager
         $req->closeCursor();
         return $categories;
     }
+    public function getCategoriesName()
+    {
+        $db = $this->dbConnect();
+        $req = $db->query('SELECT categorie FROM tbl_categorie ORDER BY id_categorie');
+
+     
+        $categories = $req->fetchall();
+
+        
+       
+        $req->closeCursor();
+        return $categories;
+    }
 }

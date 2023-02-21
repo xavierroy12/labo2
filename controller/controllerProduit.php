@@ -1,12 +1,14 @@
 <?php
 
 require('model/ProduitManager.php');
+require('model/CategorieManager.php');
 
 function listProduits()
 {
     $produitManager = new ProduitManager();
     $produits = $produitManager->getProduits();
-
+    $categorieManager = new CategorieManager();
+    $categories = $categorieManager->getCategories(); 
     require('view/produitsView.php');
 }
 
@@ -24,4 +26,18 @@ function listProduitsCategorie($idCategorie)
     $produits = $produitManager->getProduitCategories($idCategorie);
     $categorie = $produits[1]->get_categorie();
     require('view/produitsView.php');
+}
+function deleteProduit($id)
+{
+    $produitManager = new ProduitManager();
+    $produitManager->deleteProduit($id);
+    require('view/produitsView.php');
+}
+function insertProduit($produit, $categorie, $description)
+{
+    $produitManager = new ProduitManager();
+    $idLastInsert = $produitManager->insertProduit($produit, $categorie, $description);
+    require('view/produitsView.php');
+    return $idLastInsert;
+  
 }

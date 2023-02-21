@@ -1,18 +1,28 @@
 <?php
 session_start();
+$infoProduit = json_decode(file_get_contents('php://input'), true);
 define('REMEMBER_ME_COOKIE_DURATION', (86400 * 30));
 
-//Débogage afficher ce qui est reçu en paramètres
-//echo "----------------------------<br/>";
-//echo "Paramètres reçus:<br/><pre>";
-///print_r($_REQUEST);
-//echo "</pre>----------------------------<br/>";
+if(isset($infoProduit['action']) && $infoProduit['action'] === 'addProduit'){
+    http_response_code(200);
+    require('controller/controllerProduit.php');
+    $lastinsertid = insertProduit($infoProduit['produit'],$infoProduit['categorie'],$infoProduit['description']);
+    $jsonId = json_encode($lastinsertid);
+    echo $jsonId;
+    exit;
+    }
+    
+
 
 //Est-ce qu'un paramètre action est présent
 if (isset($_REQUEST['action'])) {
+    if($_REQUEST['action'] == "testAjax"){
+        print_r($_REQUEST);
+        exit;
+    }
 
     //Est-ce que l'action demandée est la liste des produits
-    if ($_REQUEST['action'] == 'produits') {
+    else if ($_REQUEST['action'] == 'produits') {
         //Ajoute le controleur de Produit
         require('controller/controllerProduit.php');
         //Appel la fonction listProduits contenu dans le controleur de Produit
@@ -104,6 +114,17 @@ if (isset($_REQUEST['action'])) {
     elseif($_REQUEST['action'] == 'validation'){
         require('controller/controllerUtilisateur.php');
         checkTokenInscription($_REQUEST['id'], $_REQUEST['token']);
+    }
+    elseif(isset($infoProduit['action']) && $infoProduit['action'] === 'addProduit'){
+        require('controller/controllerProduit.php');
+        http_response_code(200);
+        insertProduit($infoProduit['produit'],$infoProduit['categorie'],$infoProduit['description']);
+        exit;
+    }
+    elseif($_REQUEST['action'] == 'deleteProduit'){
+        require('controller/controllerProduit.php');
+        deleteProduit($_REQUEST['id']);
+        
     }
 
 

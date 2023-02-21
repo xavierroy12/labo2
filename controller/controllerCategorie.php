@@ -6,8 +6,10 @@ function listCategories()
 {
     $categorieManager = new CategorieManager();
     $categories = $categorieManager->getCategories();
-    
-
     require('view/categoriesView.php');
+}
+function CategoriesArray()
+{
+
 }
 
