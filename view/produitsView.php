@@ -25,7 +25,7 @@ height="40"/>
 
         
         <p>Description: <?= htmlspecialchars($produit->get_description()) ?> </p>
-        <input type="image" src="./inc/img/delete-icon.png" alt="Supprimer un produit"
+        <input type="image" src="./inc/img/delete-icon.png" alt="Supprimer un produit" class="buttonDelete"
         value="<?= htmlspecialchars($produit->get_id_produit()) ?>"width="40"  height="40" />        
         <hr>
     </div>
@@ -129,8 +129,64 @@ async function envoieFetch(params){
 }
 
 async function publierInfo(serverResponse){
-    let infoProduit = await serverResponse.json();
-    console.log(infoProduit);
+    if (serverResponse.status == 200) {
+        let infoProduit = await serverResponse.text();
+        alert("insertion succesfull, congrats");
+        console.log(infoProduit);
+        addForm();
+    }
+
+    else if (serverResponse.status == 400) {
+        alert("FAILURE TO ADD PRODUCT, procceed to panic");
+    }
+}
+
+function removeProduct(e,id){
+
+e.preventDefault();
+let action = "";
+if(confirm("Do you really wish to delete the product ?")){
+    action = "deleteProduit";
+}
+else{
+    return null;
+}
+console.log('chat');
+console.log(action);
+
+const params = {
+                    "action":action,
+                    "id":id
+                    };
+    envoieFetchDelete(params);
+}
+
+async function envoieFetchDelete(params){
+    try{
+    let serverResponse = await fetch(
+                                        "index.php",
+                                        {
+                                                method: 'POST',
+                                                headers: {'Accept': 'application/json; charset=utf-8', 'Content-Type': 'application/json; charset=utf-8'}, 
+                                                body:JSON.stringify(params)
+                                        }
+                                    );
+    publierInfoDelete(serverResponse);
+    }
+    catch(erreurRequete){
+        console.log("un probleme est survenue : " + erreurRequete.message);
+    }
+}
+async function publierInfoDelete(serverResponse){
+    if (serverResponse.status == 200) {
+        let infoProduit = await serverResponse.text();
+        alert("Deletion succesfull, congrats");
+        console.log(infoProduit);
+    }
+
+    else if (serverResponse.status == 400) {
+        alert("FAILURE TO DELETE PRODUCT, procceed to panic");
+    }
 }
 
 
@@ -139,6 +195,15 @@ buttonAddForm.addEventListener('click', addForm);
 var buttonAddProduit = document.getElementById('produitAdd');
 buttonAddProduit.addEventListener('click', addPost);
 
+var buttonDeleteProduit = document.getElementsByClassName('buttonDelete');
+
+for (const element of buttonDeleteProduit) {
+  // Do something with each element here
+  element.addEventListener('click', function(event) {
+    alert(event.target.value);
+  removeProduct(event, element.value);
+});
+}
 
 
 

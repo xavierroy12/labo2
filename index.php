@@ -5,12 +5,25 @@ define('REMEMBER_ME_COOKIE_DURATION', (86400 * 30));
 
 if(isset($infoProduit['action']) && $infoProduit['action'] === 'addProduit'){
     http_response_code(200);
+    $_REQUEST['action'] = 'none';
     require('controller/controllerProduit.php');
     $lastinsertid = insertProduit($infoProduit['produit'],$infoProduit['categorie'],$infoProduit['description']);
-    $jsonId = json_encode($lastinsertid);
-    echo $jsonId;
+  
+    echo $lastinsertid;
+   
     exit;
     }
+else if(isset($infoProduit['action']) && $infoProduit['action'] === 'deleteProduit'){
+    http_response_code(200);
+    $_REQUEST['action'] = 'none';
+    require('controller/controllerProduit.php');
+    deleteProduit($infoProduit['id']);
+
+    exit;
+}
+else if(isset($infoProduit['action'])){
+    http_response_code(400);
+}
     
 
 
@@ -141,9 +154,9 @@ elseif(isset($_COOKIE['remember_me'])){
 
 else {
     //Ajoute le controleur de Produit
-    require('controller/controllerAccueil.php');
+   //require('controller/controllerAccueil.php');
 
 
     //Appel la fonction listProduits contenu dans le controleur de Produit
-    listProduits();
+   // listProduits();
 }

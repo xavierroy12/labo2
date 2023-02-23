@@ -31,13 +31,11 @@ function deleteProduit($id)
 {
     $produitManager = new ProduitManager();
     $produitManager->deleteProduit($id);
-    require('view/produitsView.php');
 }
 function insertProduit($produit, $categorie, $description)
 {
     $produitManager = new ProduitManager();
     $idLastInsert = $produitManager->insertProduit($produit, $categorie, $description);
-    require('view/produitsView.php');
     return $idLastInsert;
   
 }
