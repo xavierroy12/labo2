@@ -27,10 +27,17 @@ class ProduitManager extends Manager
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
-        $req->execute(array($produitId));
+       // $result = $req->execute(array($produitId));
+       $result = $req->execute(array($produitId));
+
+       if($req->rowCount() == 0) {
+        return NULL;
+        }
+        else{
         $produit = new Produit($req->fetch());
         $req->closeCursor();
         return $produit;
+            }
         
     }
     public function getProduitCategories($id_categorie){
@@ -49,6 +56,7 @@ class ProduitManager extends Manager
     }
     public function insertProduit($produit, $categorie, $description){
         $db = $this->dbConnect();
+        echo $categorie;
         $req = $db->prepare("INSERT INTO tbl_produit (tbl_produit.id_categorie, produit, tbl_produit.description) VALUES((SELECT tbl_categorie.id_categorie FROM tbl_categorie WHERE categorie = :categorie), :produit, :descr)");
         $req->execute(array(":categorie" => $categorie, ":descr" => $description, ":produit" => $produit));
         return $idProduit =  $db->lastInsertId();
@@ -58,8 +66,12 @@ class ProduitManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare("DELETE FROM tbl_produit WHERE id_produit = :id");
         $req->execute(array(":id" => $id));
+        if($req->rowCount() == 0) {
+            return NULL;
+            }
+        else
+        return 1;
     }
     
 
 }
-?>

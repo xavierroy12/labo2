@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 $infoProduit = json_decode(file_get_contents('php://input'), true);
 define('REMEMBER_ME_COOKIE_DURATION', (86400 * 30));
@@ -39,7 +39,7 @@ if (isset($_REQUEST['action'])) {
         //Ajoute le controleur de Produit
         require('controller/controllerProduit.php');
         //Appel la fonction listProduits contenu dans le controleur de Produit
-        listProduits();
+        listProduits(FALSE);
     }
     // Sinon est-ce que l'action demandée est la description d'un produit
     elseif ($_REQUEST['action'] == 'produit') {
@@ -49,7 +49,7 @@ if (isset($_REQUEST['action'])) {
             //Ajoute le controleur de Produit
             require('controller/controllerProduit.php');
             //Appel la fonction produit contenu dans le controleur de Produit
-            produit($_REQUEST['id']);
+            produit($_REQUEST['id'],FALSE);
         }
         else {
             //Si on n'a pas reçu de paramètre id, mais que la page produit a été appelé
@@ -153,10 +153,10 @@ elseif(isset($_COOKIE['remember_me'])){
 }
 
 else {
-    //Ajoute le controleur de Produit
-   //require('controller/controllerAccueil.php');
+   // Ajoute le controleur de Produit
+   require('controller/controllerAccueil.php');
 
 
     //Appel la fonction listProduits contenu dans le controleur de Produit
-   // listProduits();
+   listProduits();
 }

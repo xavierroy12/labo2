@@ -3,21 +3,29 @@
 require('model/ProduitManager.php');
 require('model/CategorieManager.php');
 
-function listProduits()
+function listProduits($estApi)
 {
     $produitManager = new ProduitManager();
     $produits = $produitManager->getProduits();
     $categorieManager = new CategorieManager();
     $categories = $categorieManager->getCategories(); 
+    if($estApi === FALSE)
     require('view/produitsView.php');
+    else{
+        return $produits;
+    }
 }
 
-function produit($idProduit)
+function produit($idProduit,$estApi)
 {
     $produitManager = new ProduitManager();
     $produit = $produitManager->getProduit($idProduit);    
-
+    if($estApi === FALSE)
     require('view/produitView.php');
+    else{
+        return $produit;
+    }
+  
 }
 
 function listProduitsCategorie($idCategorie)
@@ -30,7 +38,8 @@ function listProduitsCategorie($idCategorie)
 function deleteProduit($id)
 {
     $produitManager = new ProduitManager();
-    $produitManager->deleteProduit($id);
+    $result = $produitManager->deleteProduit($id);
+    return $result;
 }
 function insertProduit($produit, $categorie, $description)
 {
@@ -39,3 +48,4 @@ function insertProduit($produit, $categorie, $description)
     return $idLastInsert;
   
 }
+?>

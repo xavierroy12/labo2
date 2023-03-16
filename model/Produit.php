@@ -2,7 +2,7 @@
 
 //La classe Produit représente les champs présents dans la table produit.
 
-class Produit {
+class Produit implements jsonSerializable{
     private $_id_produit;
     private $_id_categorie;
     private $_categorie; // N'est pas dans la table produit, mais les requêtes vont aussi chercher le nom de la catégorie en faisant une jointure.
@@ -118,4 +118,15 @@ class Produit {
 
         return $this;
     }
+
+    public function jsonSerialize() : mixed {
+        return array(
+                      'id_produit'   => $this->_id_produit,
+                      'id_categorie' => $this->_id_categorie,
+                      'categorie'    => $this->_categorie,
+                      'produit'      => $this->_produit,
+                      'description'  => $this->_description
+                    );
+    }
+    
 }
