@@ -8,10 +8,12 @@ require_once("model/Produit.php");
 
 class ProduitManager extends Manager
 {
+    const SELECT_ALL_PRODUITS = "SELECT id_produit, id_categorie, produit_:lang AS produit, description_:lang AS description FROM tbl_produit";
     public function getProduits()
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie ORDER BY id_produit');
+
+        $req = $db->query(str_replace(':lang', $_SESSION['language'], self::SELECT_ALL_PRODUITS));
 
         $produits = array();
 
@@ -22,11 +24,11 @@ class ProduitManager extends Manager
         $req->closeCursor();
         return $produits;
     }
-
+    const SELECT_PRODUIT_ID = "SELECT id_produit, p.id_categorie, produit_:lang AS produit, p.description_:lang AS description, c.categorie_:lang FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?";
     public function getProduit($produitId)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE id_produit = ?');
+        $req = $db->prepare(str_replace(':lang', $_SESSION['language'], self::SELECT_PRODUIT_ID));
        // $result = $req->execute(array($produitId));
        $result = $req->execute(array($produitId));
 
@@ -43,9 +45,10 @@ class ProduitManager extends Manager
             }
         
     }
+    const SELECT_PRODUIT_CAT = "SELECT id_produit, p.id_categorie, produit_:lang AS produit, p.description_:lang AS description, c.categorie_:lang FROM tbl_produit as p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE p.id_categorie = :idCategorie";
     public function getProduitCategories($id_categorie){
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT p.*, c.categorie FROM tbl_produit as p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie WHERE p.id_categorie = :idCategorie');
+        $req = $db->prepare(str_replace(':lang', $_SESSION['language'], self::SELECT_PRODUIT_CAT));
         $req->execute(array(":idCategorie" => $id_categorie));
         $produits = array();
         $tableDonnees = $req->fetchAll();
@@ -59,7 +62,7 @@ class ProduitManager extends Manager
     }
     public function insertProduit($produit, $categorie, $description){
         $db = $this->dbConnect();
-        echo $categorie;
+
         $req = $db->prepare("INSERT INTO tbl_produit (tbl_produit.id_categorie, produit, tbl_produit.description) VALUES((SELECT tbl_categorie.id_categorie FROM tbl_categorie WHERE categorie = :categorie), :produit, :descr)");
         try {
             $req->execute(array(":categorie" => $categorie, ":descr" => $description, ":produit" => $produit));

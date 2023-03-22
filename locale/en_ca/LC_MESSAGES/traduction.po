@@ -1,0 +1,134 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2023-03-22 12:17-0400\n"
+"PO-Revision-Date: 2023-03-22 12:19-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: index.php:47
+msgid "Bonjour"
+msgstr "Hello"
+
+#: index.php:49
+msgid "Les biscuits sont délicieux"
+msgstr "The cookies are delicious"
+
+#: index.php:69
+#, php-format
+msgid "%d commentaire"
+msgid_plural "%d commentaires"
+msgstr[0] "%d comment"
+msgstr[1] "%d comment"
+
+#: index.php:128 index.php:145
+msgid "Erreur : aucun identifiant de produit envoyé"
+msgstr "Error : no product id sent"
+
+#: index.php:181
+msgid "Erreur : pas de courriel ou de mot de passe"
+msgstr "Error : no email or no password"
+
+#: view/accueilView.php:11
+msgid "Démonstration du modèle MVC"
+msgstr "Demonstration of the MVC model"
+
+#: view/accueilView.php:12
+msgid "Liste des produits sur la page d'accueil"
+msgstr "List of the products on the home page"
+
+#: view/accueilView.php:22
+msgid "Voir les détails"
+msgstr "See details"
+
+#: view/categoriesView.php:4 view/template.php:46
+msgid "Les categories"
+msgstr "The categories"
+
+#: view/categoriesView.php:13
+msgid "Voir les produits"
+msgstr "See the products"
+
+#: view/inscriptionView.php:3 view/loginView.php:23
+msgid "Se connecter"
+msgstr "Connect"
+
+#: view/loginView.php:16
+msgid "mot de passe"
+msgstr "password"
+
+#: view/loginView.php:20
+msgid "Se souvenir de moi"
+msgstr "Remember me"
+
+#: view/produitView.php:1
+msgid "Produit - "
+msgstr "Product - "
+
+#: view/produitView.php:7
+msgid "Categorie"
+msgstr "The categorie"
+
+#: view/produitView.php:8 view/produitsView.php:27 view/produitsView.php:45
+msgid "Description"
+msgstr "Description"
+
+#: view/produitsView.php:3 view/template.php:45
+msgid "Les produits"
+msgstr "The products"
+
+#: view/produitsView.php:8
+msgid " de categorie "
+msgstr " of categorie "
+
+#: view/produitsView.php:11
+msgid "Tester AJAX"
+msgstr "Test Ajax"
+
+#: view/produitsView.php:24 view/produitsView.php:35
+msgid "Produit"
+msgstr "Product"
+
+#: view/produitsView.php:38
+msgid "Catégorie"
+msgstr "Categorie"
+
+#: view/template.php:40
+msgid "bienvenue "
+msgstr "welcome "
+
+#: view/template.php:44
+msgid "Accueil"
+msgstr "Home"
+
+#: view/template.php:47
+msgid "S'inscrire"
+msgstr "Register"
+
+#: view/template.php:50
+msgid "Se deconnecter"
+msgstr "Disconnect"
+
+#: view/template.php:52
+msgid "Se Connecter"
+msgstr "Connect"
+
+#: view/template.php:55
+msgid "Anglais"
+msgstr "English"
+
+#: view/template.php:56
+msgid "Français"
+msgstr "French"
+
+#: view/template.php:57
+msgid "Portugais"
+msgstr "Portugese"

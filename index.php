@@ -1,5 +1,74 @@
 <?php 
 session_start();
+
+
+if (!isset($_SESSION['language'])) {
+    $_SESSION['language'] = 'fr'; // Set French as default language 
+  }
+else{
+    if(isset($_REQUEST['lang']))
+    $_SESSION['language'] = $_REQUEST['lang'];
+
+}
+/* Importation de la librairie "gettext" (en supposant que
+   les fichiers de la librairie ont été placés dans un dossier
+   "gettext" lui-même situé à la racine du site Web). */
+require_once './inc/lib/gettext.inc';
+
+// Le nom des fichiers de traduction ".mo" (sans l'extension)
+define('TRANSLATE_FILENAME', 'traduction');
+
+/* La variable $langue pourra toujours être modifiée en fonction
+   du choix qu'aura fait l'utilisateur (par exemple, par le biais
+   d'une valeur enregistrée dans la session PHP). Pour le moment,
+   cette variable est simplement forcée à 'fr_ca'. */
+if(isset($_SESSION['language']) && $_SESSION['language'] === 'en')
+$langue = 'en_ca';
+elseif((isset($_SESSION['language']) && $_SESSION['language'] === 'pt'))
+$langue = 'pt_br';
+else
+$langue = 'fr';
+T_setlocale(LC_MESSAGES, $langue);
+
+/* On associe le nom des fichiers de traduction ".mo" au chemin
+   complet permettant d'y accéder (ici, il s'agit de la racine
+   de notre site Web concaténée au dossier 'locale'). */
+bindtextdomain(TRANSLATE_FILENAME, (realpath('./') . '\\locale\\'));
+
+// L'encodage des fichiers de traduction ".mo" est établi ici.
+if (function_exists('bind_textdomain_codeset'))
+    bind_textdomain_codeset(TRANSLATE_FILENAME, 'UTF-8');
+
+/* Le bon fichier de traduction ".mo" tout dépendant de la
+   langue choisie par l'utilisateur est automatiquement
+   appliqué ici. */
+textdomain(TRANSLATE_FILENAME);
+
+
+   
+    /* Pour gérer le pluriel des mots, une variable doit d'abord être
+       déclarée. Celle-ci contiendra un nombre qui déterminera si un
+       quelconque mot doit être mis au singulier ou au pluriel. */
+    $qt = 3;
+   
+    /* La fonction ngettext() permet de gérer le singulier et le
+       pluriel d'un mot :
+       
+       - Premier argument   => Version du mot au singulier
+       - Deuxième argument  => Version du mot au pluriel
+       - Troisième argument => Un nombre (la variable précédemment
+                               créée) qui permet d'indiquer quelle
+                               version prendre
+       
+       La fonction sprintf() permet, quant à elle, de formater une
+       chaîne de caractères en remplaçant, dans l'exemple ci-dessous,
+       le paramètre %d par le nombre contenu dans la variable $qt. */
+
+
+
+//Fin du test de traduction et debut de index.php
+
+
 $infoProduit = json_decode(file_get_contents('php://input'), true);
 define('REMEMBER_ME_COOKIE_DURATION', (86400 * 30));
 
@@ -9,7 +78,7 @@ if(isset($infoProduit['action']) && $infoProduit['action'] === 'addProduit'){
     require('controller/controllerProduit.php');
     $lastinsertid = insertProduit($infoProduit['produit'],$infoProduit['categorie'],$infoProduit['description']);
   
-    echo $lastinsertid;
+
    
     exit;
     }
@@ -53,7 +122,7 @@ if (isset($_REQUEST['action'])) {
         }
         else {
             //Si on n'a pas reçu de paramètre id, mais que la page produit a été appelé
-            echo 'Erreur : aucun identifiant de produit envoyé';
+            echo _('Erreur : aucun identifiant de produit envoyé');
         }
     } 
     elseif ($_REQUEST['action'] == 'categories') {
@@ -70,7 +139,7 @@ if (isset($_REQUEST['action'])) {
         }
         else {
             //Si on n'a pas reçu de paramètre id, mais que la page produit a été appelé
-            echo 'Erreur : aucun identifiant de produit envoyé';
+            echo _('Erreur : aucun identifiant de produit envoyé');
         }
     }
     elseif(isset($_REQUEST["credential"])){
@@ -106,7 +175,7 @@ if (isset($_REQUEST['action'])) {
         authentifier($_REQUEST['courriel'], $_REQUEST['mdp'], $_REQUEST['souvenir'] );
         }
         else{
-            echo 'Erreur : no email or no password';
+            echo _('Erreur : pas de courriel ou de mot de passe');
         }
     }
     elseif($_REQUEST['action'] == 'deconnexion'){

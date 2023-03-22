@@ -1,14 +1,14 @@
 <?php $title = 'Produits';
 
-$titreH1 = 'Les produits'; 
+$titreH1 = _('Les produits'); 
 if (isset($categories)){
     require_once('model/Categorie.php');
 }
 if (isset($categorie))
-$titreH1 .= ' de categorie ' . $categorie;
+$titreH1 .= _(' de categorie ') . $categorie;
 
 ?>
-<button id="buttonGet">Tester AJAX</button>
+<button id="buttonGet"><?= _("Tester AJAX")?></button>
 
 
 
@@ -21,10 +21,10 @@ height="40"/>
 
 <?php foreach($produits as $produit) { ?>
     <div>
-        <h3>Produit: <?= htmlspecialchars($produit->get_produit()) ?> </h3> 
+        <h3><?= _("Produit")?>: <?= htmlspecialchars($produit->get_produit()) ?> </h3> 
 
         
-        <p>Description: <?= htmlspecialchars($produit->get_description()) ?> </p>
+        <p><?= _("Description")?> : <?= htmlspecialchars($produit->get_description()) ?> </p>
         <input type="image" src="./inc/img/delete-icon.png" alt="Supprimer un produit" class="buttonDelete"
         value="<?= htmlspecialchars($produit->get_id_produit()) ?>"width="40"  height="40" />        
         <hr>
@@ -32,17 +32,17 @@ height="40"/>
 <?php } ?>
 
 <form action="index.php" method="post" id='form'>
-      <label for="produit">Produit:</label>
+      <label for="produit"><?= _("Produit")?>:</label>
       <input type="text" id="produit" name="produit"><br>
 
-      <label for="categorie">Catégorie:</label>
+      <label for="categorie"><?= _("Catégorie")?>:</label>
 
       <select id="categorie" name="categorie">
       <?php foreach($categories as $cat) { ?>
         <option value=<?= htmlspecialchars($cat->get_categorie()) ?>><?= htmlspecialchars($cat->get_categorie()) ?></option>
         <?php } ?>
       </select><br>
-      <label for="description">Description:</label><br>
+      <label for="description"><?= _("Description")?>:</label><br>
       <textarea id="description" name="description" rows="4" cols="50"></textarea><br>
 
       <input type="submit" value="Envoyer" id='produitAdd'>
