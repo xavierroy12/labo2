@@ -1,7 +1,7 @@
 <?php $title = 'Categories'?>
 
 <?php ob_start(); ?>
-<h1>Les categories</h1>
+<h1><?=_("Les categories")?></h1>
 
 <?php foreach($categories as $categorie) { ?>
     <div>
@@ -10,7 +10,7 @@
         <p>Description: <?= htmlspecialchars($categorie->get_description()) ?> </p>  
 
   
-        <a href="index.php?action=produitscategories&amp;id=<?= $categorie->get_id_categorie();?>">Voir les produits</a> 
+        <a href="index.php?action=produitscategories&amp;id=<?= $categorie->get_id_categorie();?>"><?=_("Voir les produits")?></a> 
         <hr>
     </div>
 <?php } ?>

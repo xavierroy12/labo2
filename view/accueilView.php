@@ -8,8 +8,8 @@
 
 
  ?>
-<h1>Démonwstration du modèle MVC</h1>
-<p>Liste des produits sur la page d'accueil</p>
+<h1><?= _('Démonstration du modèle MVC'); ?></h1>
+<p><?= _("Liste des produits sur la page d'accueil"); ?></p>
 
 
 
@@ -19,7 +19,7 @@ foreach ($produits as $prod){ ?>
     <div>
         <?php //htmlspecialchars() permet de convertir les caractères HTML en caractère encodé ?>
         <h3> <?= htmlspecialchars($prod->get_produit()) ?> </h3>        
-        <p><a href="index.php?action=produit&amp;id=<?= $prod->get_id_produit() ?>">Voir les détails</a></p>        
+        <p><a href="index.php?action=produit&amp;id=<?= $prod->get_id_produit() ?>"><?= _('Voir les détails'); ?></a></p>        
     </div>
 <?php } ?>
 

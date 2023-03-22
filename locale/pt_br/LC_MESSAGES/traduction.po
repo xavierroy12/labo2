@@ -1,0 +1,134 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2023-03-22 12:10-0400\n"
+"PO-Revision-Date: 2023-03-22 12:22-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: index.php:47
+msgid "Bonjour"
+msgstr "Olá"
+
+#: index.php:49
+msgid "Les biscuits sont délicieux"
+msgstr "Os biscoitos são deliciosos"
+
+#: index.php:69
+#, php-format
+msgid "%d commentaire"
+msgid_plural "%d commentaires"
+msgstr[0] ""
+msgstr[1] ""
+
+#: index.php:128 index.php:145
+msgid "Erreur : aucun identifiant de produit envoyé"
+msgstr "Erro: nenhum identificador de produto enviado"
+
+#: index.php:181
+msgid "Erreur : pas de courriel ou de mot de passe"
+msgstr " Erro: nenhum e-mail ou senha"
+
+#: view/accueilView.php:11
+msgid "Démonstration du modèle MVC"
+msgstr "Demonstração do modelo MVC"
+
+#: view/accueilView.php:12
+msgid "Liste des produits sur la page d'accueil"
+msgstr "Lista de produtos na página inicial"
+
+#: view/accueilView.php:22
+msgid "Voir les détails"
+msgstr "Ver detalhes"
+
+#: view/categoriesView.php:4 view/template.php:46
+msgid "Les categories"
+msgstr " As categorias"
+
+#: view/categoriesView.php:13
+msgid "Voir les produits"
+msgstr "Ver produtos"
+
+#: view/inscriptionView.php:3 view/loginView.php:23
+msgid "Se connecter"
+msgstr " Entrar"
+
+#: view/loginView.php:16
+msgid "mot de passe"
+msgstr "Senha"
+
+#: view/loginView.php:20
+msgid "Se souvenir de moi"
+msgstr " Lembrar-me"
+
+#: view/produitView.php:1
+msgid "Produit - "
+msgstr " Produto - "
+
+#: view/produitView.php:7
+msgid "Categorie"
+msgstr "Categoria"
+
+#: view/produitView.php:8 view/produitsView.php:27 view/produitsView.php:45
+msgid "Description"
+msgstr "Descrição"
+
+#: view/produitsView.php:3 view/template.php:45
+msgid "Les produits"
+msgstr "Os produtos"
+
+#: view/produitsView.php:8
+msgid " de categorie "
+msgstr "Da categoria"
+
+#: view/produitsView.php:11
+msgid "Tester AJAX"
+msgstr "Testar AJAX"
+
+#: view/produitsView.php:24 view/produitsView.php:35
+msgid "Produit"
+msgstr "Produto"
+
+#: view/produitsView.php:38
+msgid "Catégorie"
+msgstr "Categoria"
+
+#: view/template.php:40
+msgid "bienvenue "
+msgstr "bem-vindo "
+
+#: view/template.php:44
+msgid "Accueil"
+msgstr "Página inicial"
+
+#: view/template.php:47
+msgid "S'inscrire"
+msgstr "Registrar"
+
+#: view/template.php:50
+msgid "Se deconnecter"
+msgstr "Desconectar"
+
+#: view/template.php:52
+msgid "Se Connecter"
+msgstr "Conectar"
+
+#: view/template.php:55
+msgid "Anglais"
+msgstr "Inglês"
+
+#: view/template.php:56
+msgid "Français"
+msgstr "Francês"
+
+#: view/template.php:57
+msgid "Portugais"
+msgstr "Português"

@@ -37,20 +37,24 @@
         
     <body>
         <?php if(isset($_SESSION['courriel']))
-        echo 'bienvenue '. $_SESSION['courriel'];
+        echo _('bienvenue '). $_SESSION['courriel'];
         ?>
         <nav>
             <ul>
-                <li><a href="<?= $baseURL;?>index.php">Accueil</a></li>
-                <li><a href="<?= $baseURL;?>produits">Les produits</a></li>
-                <li><a href="<?= $baseURL;?>categories">Les categories</a></li>
-                <li><a href="<?= $baseURL;?>register">S'inscrire</a></li>
+                <li><a href="<?= $baseURL;?>index.php"><?= _("Accueil")?></a></li>
+                <li><a href="<?= $baseURL;?>produits"><?= _("Les produits")?> </a></li>
+                <li><a href="<?= $baseURL;?>categories"><?= _("Les categories")?></a></li>
+                <li><a href="<?= $baseURL;?>register"><?= _("S'inscrire")?></a></li>
                 
                 <?php if(isset($_SESSION['courriel'])) : ?>
-                    <li><a href="<?= $baseURL;?>deconnexion">Se deconnecter</a></li>
+                    <li><a href="<?= $baseURL;?>deconnexion"><?= _("Se deconnecter")?></a></li>
                 <?php else : ?>
-                    <li><a href="<?= $baseURL;?>connexion">Se Connecter</a></li>
+                    <li><a href="<?= $baseURL;?>connexion"><?= _("Se Connecter")?></a></li>
                 <?php endif; ?>
+
+                <li><a href="<?= $baseURL;?>index.php?lang=en"><?= _("Anglais")?></a></li>
+                <li><a href="<?= $baseURL;?>index.php?lang=fr"><?= _("Français")?></a></li>
+                <li><a href="<?= $baseURL;?>index.php?lang=pt"><?= _("Portugais")?></a></li>
 
             </ul>
         </nav>

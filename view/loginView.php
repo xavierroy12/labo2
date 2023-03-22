@@ -13,14 +13,14 @@
         <input type="text" name="courriel" id="courriel">
         </div>
     <div>
-        <label for="mdp">Mot de passe: </label>
+        <label for="mdp"><?= _("mot de passe")?> </label>
         <input type="password" name="mdp" id="mdp">
     </div>
     <input type="checkbox" id="souvenir" name="souvenir" value="true">
-    <label for="souvenir"> Se souvenir de moi</label><br>
+    <label for="souvenir"> <?= _("Se souvenir de moi")?></label><br>
     <input type="hidden" name="action" value="authentifier">
     <div>
-        <button type="submit">Se connecter</button>
+        <button type="submit"><?= _("Se connecter")?></button>
     </div>
 </form>
 

@@ -1,6 +1,6 @@
 <?php $title = 'Inscription'?>
 <?php ob_start(); ?>
-<h1>Se connecter</h1>
+<h1><?= _("Se connecter")?></h1>
 
 <form action="index.php" method="post" class="login">
 <div>
