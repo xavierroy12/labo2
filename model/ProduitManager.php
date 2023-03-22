@@ -11,7 +11,7 @@ class ProduitManager extends Manager
     public function getProduits()
     {
         $db = $this->dbConnect();
-        $req = $db->query('SELECT * FROM tbl_produit ORDER BY id_produit');
+        $req = $db->query('SELECT p.*, categorie FROM tbl_produit AS p INNER JOIN tbl_categorie AS c ON p.id_categorie = c.id_categorie ORDER BY id_produit');
 
         $produits = array();
 
@@ -30,9 +30,12 @@ class ProduitManager extends Manager
        // $result = $req->execute(array($produitId));
        $result = $req->execute(array($produitId));
 
-       if($req->rowCount() == 0) {
-        return NULL;
+        if($req->rowCount() == 0) {
+            $req->closeCursor();
+            return NULL;
+            
         }
+
         else{
         $produit = new Produit($req->fetch());
         $req->closeCursor();
@@ -58,8 +61,14 @@ class ProduitManager extends Manager
         $db = $this->dbConnect();
         echo $categorie;
         $req = $db->prepare("INSERT INTO tbl_produit (tbl_produit.id_categorie, produit, tbl_produit.description) VALUES((SELECT tbl_categorie.id_categorie FROM tbl_categorie WHERE categorie = :categorie), :produit, :descr)");
-        $req->execute(array(":categorie" => $categorie, ":descr" => $description, ":produit" => $produit));
-        return $idProduit =  $db->lastInsertId();
+        try {
+            $req->execute(array(":categorie" => $categorie, ":descr" => $description, ":produit" => $produit));
+            return $idProduit =  $db->lastInsertId();
+        } catch (PDOException $erreur) {
+            return -1;
+        }
+
+        
     }
     public function deleteProduit($id)
     {

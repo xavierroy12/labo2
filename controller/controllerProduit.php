@@ -19,7 +19,8 @@ function listProduits($estApi)
 function produit($idProduit,$estApi)
 {
     $produitManager = new ProduitManager();
-    $produit = $produitManager->getProduit($idProduit);    
+    $produit = $produitManager->getProduit($idProduit);   
+  
     if($estApi === FALSE)
     require('view/produitView.php');
     else{

@@ -32,7 +32,7 @@ if (isset($_REQUEST['objet'])) {
                     $infosNouveauProduit = json_decode(file_get_contents('php://input'), true);
                     if(isset($infosNouveauProduit["produit"]) && isset($infosNouveauProduit["id_categorie"]) && isset($infosNouveauProduit["description"])){
                         $lastId = insertProduit($infosNouveauProduit["produit"],$infosNouveauProduit["id_categorie"],$infosNouveauProduit["description"]);
-                        if(is_null($lastId)){
+                        if($lastId <= 0){
                             http_response_code(400);
                             echo '{"ÉCHEC" : "L\'ajout du produit a échoué. L\'ID de la catégorie n’existe pas en BD."}';
                         }
@@ -60,19 +60,18 @@ if (isset($_REQUEST['objet'])) {
                             if(is_null($result)){
                                 http_response_code(400);
                                 echo '{"ÉCHEC" : "Deletion failed."}';
+                                exit;
                             }
                             else{
                                 http_response_code(200);
                                 echo '{"KING" : "succesfully deleted"}';
+                                exit;
                             }
 
                         }
-                        else{
-                            http_response_code(400);
-                            echo '{"ÉCHEC" : "Entered id is not a numerical value"}';
-                        }
-                        
                     }
+                    http_response_code(400);
+                    echo '{"ÉCHEC" : "Entered id is not a numerical value"}';
                     break;
                 default:
                     http_response_code(400);
