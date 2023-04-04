@@ -22,6 +22,7 @@ define('TRANSLATE_FILENAME', 'traduction');
    du choix qu'aura fait l'utilisateur (par exemple, par le biais
    d'une valeur enregistrée dans la session PHP). Pour le moment,
    cette variable est simplement forcée à 'fr_ca'. */
+   
 if(isset($_SESSION['language']) && $_SESSION['language'] === 'en')
 $langue = 'en_ca';
 elseif((isset($_SESSION['language']) && $_SESSION['language'] === 'pt'))
@@ -204,6 +205,11 @@ if (isset($_REQUEST['action'])) {
         exit;
     }
     elseif($_REQUEST['action'] == 'deleteProduit'){
+        require('controller/controllerProduit.php');
+        deleteProduit($_REQUEST['id']);
+        
+    }
+    elseif($_REQUEST['action'] == 'achat'){
         require('controller/controllerProduit.php');
         deleteProduit($_REQUEST['id']);
         
