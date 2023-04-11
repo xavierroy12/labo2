@@ -44,6 +44,7 @@
                 <li><a href="<?= $baseURL;?>index.php">Accueil</a></li>
                 <li><a href="<?= $baseURL;?>produits">Les produits</a></li>
                 <li><a href="<?= $baseURL;?>categories">Les categories</a></li>
+                <li><a href="<?= $baseURL;?>?action=achatProduit">Achetter un produit</a></li>
                 <li><a href="<?= $baseURL;?>register">S'inscrire</a></li>
                 
                 <?php if(isset($_SESSION['courriel'])) : ?>

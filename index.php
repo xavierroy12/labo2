@@ -1,7 +1,14 @@
 <?php 
 session_start();
-$infoProduit = json_decode(file_get_contents('php://input'), true);
+
 define('REMEMBER_ME_COOKIE_DURATION', (86400 * 30));
+
+
+
+
+
+
+
 
 if(isset($infoProduit['action']) && $infoProduit['action'] === 'addProduit'){
     http_response_code(200);
@@ -21,6 +28,14 @@ else if(isset($infoProduit['action']) && $infoProduit['action'] === 'deleteProdu
 
     exit;
 }
+if(isset($infoProduit['action']) && $infoProduit['action'] === 'achat'){
+    http_response_code(200);
+    $_REQUEST['action'] = 'none';
+    require('controller/controllerProduit.php');
+
+    listProduitAchatNoView();
+}
+
 else if(isset($infoProduit['action'])){
     http_response_code(400);
 }
@@ -40,6 +55,49 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerProduit.php');
         //Appel la fonction listProduits contenu dans le controleur de Produit
         listProduits(FALSE);
+    }
+        // Si l’utilisateur vient de cliquer sur le bouton Paypal, les informations de la requête AJAX seront traitées dans ce « else if ».
+    else if ($_REQUEST['action'] === 'paypal') {
+        
+        require('./controller/controllerPaypal.php');
+        require('./controller/controllerUtilisateur.php');
+        header("Content-Type: application/json");
+        $paypalInfos = json_decode(file_get_contents('php://input'), true);
+        $orderItems = $paypalInfos['orderItems'];
+        if(isset($paypalInfos['orderItems'])){
+           
+            $id = getUserIdByCourriel($_SESSION['courriel']);
+            $paypalTransaction = registerOrder($id, $paypalInfos);
+            
+            if ($paypalTransaction != null) {
+                http_response_code(200);
+                echo json_encode($paypalTransaction->result, JSON_PRETTY_PRINT);
+                exit;
+            }
+            else{
+                http_response_code(400);
+                echo '{"ÉCHEC" : "La transaction Paypal ne s\'est pas complétée correctement."}';
+                exit;
+            }
+        }
+    }
+
+    // Le Webhook de PayPal Developper sera traité dans ce « else if » pour les événements « checkout order approved » et « payment capture
+    // completed ».
+    else if (isset($paypalInfos['event_type'])) {
+        require('./controller/controllerPaypal.php');
+
+        if ($paypalInfos['event_type'] === 'CHECKOUT.ORDER.APPROVED') {
+            // Enregistrez dans la BD les informations « id », « payer_id » et « email_address » de l’événement « checkout order approved »
+            // et ce, en passant par une fonction du contrôleur controllerPaypal.php. N’oubliez pas de retourner un code de succès (200) ou
+            // un code d’échec (400) aux serveurs PayPal si l’insertion réussit ou non en BD.
+        }     
+        else if ($paypalInfos['event_type'] === 'PAYMENT.CAPTURE.COMPLETED') {
+            // Faites passer à 1 le statut de la commande dans la BD dont l’identifiant correspond au champ
+            // « order_id » de l’événement « payment capture completed » et ce, en passant par une fonction
+            // du contrôleur controllerPaypal.php. N’oubliez pas d’envoyer un code de succès (200) ou un code
+            // d’échec (400) aux serveurs PayPal si la modification réussit ou non en BD.
+        }
     }
     // Sinon est-ce que l'action demandée est la description d'un produit
     elseif ($_REQUEST['action'] == 'produit') {
@@ -138,6 +196,10 @@ if (isset($_REQUEST['action'])) {
         require('controller/controllerProduit.php');
         deleteProduit($_REQUEST['id']);
         
+    }
+    elseif($_REQUEST['action'] == 'achatProduit'){
+        require('controller/controllerProduit.php');
+        listProduitsAchat();
     }
 
 

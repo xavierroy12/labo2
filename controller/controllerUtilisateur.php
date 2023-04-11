@@ -136,5 +136,12 @@ function checkTokenInscription($id, $token){
         echo "bad verification. we'll get em next time buddy";
     }
 }
+function getUserIdByCourriel($courriel)
+{
+    $utilisateurManager = new UtilisateurManager();
+    $utilisateur = $utilisateurManager->getUtilisateurParCourriel($courriel);
+    $id = $utilisateur->get_id_utilisateur();
+    return $id;
+}
 
 ?>

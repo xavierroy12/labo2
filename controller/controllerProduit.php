@@ -1,5 +1,4 @@
 <?php
-
 require('model/ProduitManager.php');
 require('model/CategorieManager.php');
 
@@ -14,6 +13,22 @@ function listProduits($estApi)
     else{
         return $produits;
     }
+}
+function listProduitsAchat()
+{
+    $produitManager = new ProduitManager();
+    $produits = $produitManager->getProduits();
+    $categorieManager = new CategorieManager();
+    $categories = $categorieManager->getCategories(); 
+    require('view/achatView.php');
+}
+function listProduitAchatNoView(){
+    
+    $produitManager = new ProduitManager();
+    $produits = $produitManager->getProduits();
+    $categorieManager = new CategorieManager();
+    $categories = $categorieManager->getCategories(); 
+    require('inc/achatJSON.php');
 }
 
 function produit($idProduit,$estApi)
